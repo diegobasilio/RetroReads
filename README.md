@@ -1,6 +1,4 @@
-<div align="left">
-  <img height="144" src="https://imgur.com/DAsGHhe.png"  />
-</div>
+<img align="left" height="144" src="https://imgur.com/DAsGHhe.png"  />
 
 ###
 
@@ -12,11 +10,13 @@
 
 ###
 
-<img align="right" height="300" src="https://imgur.com/T9CJFQv.png"  />
+<p align="left">CSCO - Conexão Sebo-Consumidor Online é um sistema desenvolvido para conectar leitores, livrarias e sebos, facilitando a venda, compra e gerenciamento de livros de maneira eficiente e intuitiva. Este projeto tem como objetivo principal oferecer uma solução completa para problemas gerenciais de negócios, ao mesmo tempo em que auxilia usuários comuns a organizarem suas estantes de livros de forma prática e funcional.<br><br>O sistema abrange desde o gerenciamento de estoque e planejamento financeiro para livrarias e sebos, até funcionalidades que permitem aos leitores acompanhar suas leituras, fazer reservas de livros e explorar novas histórias. Dessa forma, o CSCO oferece uma plataforma robusta, acessível e de alta funcionalidade, atendendo às necessidades tanto de negócios de venda de livros quanto de leitores entusiastas.<br><br>Ao integrar diferentes tipos de usuários, o CSCO promove um ambiente colaborativo onde o gerenciamento de livros se torna mais simples, organizado e acessível, trazendo benefícios para toda a cadeia de valor do mercado de livros.</p>
 
 ###
 
-<p align="left">CSCO - Conexão Sebo-Consumidor Online é um sistema desenvolvido para conectar leitores, livrarias e sebos, facilitando a venda, compra e gerenciamento de livros de maneira eficiente e intuitiva. Este projeto tem como objetivo principal oferecer uma solução completa para problemas gerenciais de negócios, ao mesmo tempo em que auxilia usuários comuns a organizarem suas estantes de livros de forma prática e funcional.<br><br>O sistema abrange desde o gerenciamento de estoque e planejamento financeiro para livrarias e sebos, até funcionalidades que permitem aos leitores acompanhar suas leituras, fazer reservas de livros e explorar novas histórias. Dessa forma, o CSCO oferece uma plataforma robusta, acessível e de alta funcionalidade, atendendo às necessidades tanto de negócios de venda de livros quanto de leitores entusiastas.<br><br>Ao integrar diferentes tipos de usuários, o CSCO promove um ambiente colaborativo onde o gerenciamento de livros se torna mais simples, organizado e acessível, trazendo benefícios para toda a cadeia de valor do mercado de livros.</p>
+<div align="center">
+  <img height="300" src="https://imgur.com/T9CJFQv.png"  />
+</div>
 
 ###
 
