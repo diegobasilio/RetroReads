@@ -1,5 +1,5 @@
 <div align="left">
-  <img height="144" src="https://imgur.com/DAsGHhe.png" alt="RetroReads"  />
+  <img height="98" src="https://imgur.com/DAsGHhe.png" alt="RetroReads"  />
 </div>
 
 ###
