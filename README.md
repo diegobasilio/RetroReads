@@ -4,7 +4,7 @@
 
 ###
 
-<h1 align="left">RetroReads</h1>
+<h1 align="left">RetroReads - CSCO</h1>
 
 ###
 
@@ -22,7 +22,7 @@
 
 ###
 
-<h2 align="left">Techs</h2>
+<h2 align="left">Stacks</h2>
 
 ###
 
