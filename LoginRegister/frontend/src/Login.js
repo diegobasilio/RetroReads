@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Validation from './LoginValidation'
@@ -60,14 +59,4 @@ function Login() {
 }
 
 export default Login;
-=======
-import React from 'react'
 
-function Login() {
-  return (
-    <div>Login</div>
-  )
-}
-
-export default Login
->>>>>>> 92612bd222c7239585509d595b45904c7a8aa3ed
