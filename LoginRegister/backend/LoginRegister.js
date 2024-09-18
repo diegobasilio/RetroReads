@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs"); // Para criptografar as senhas
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); //
 
 //Criando conexão com BD
 const db = mysql.createConnection({
