@@ -5,6 +5,9 @@ const router = express.Router();
 const multer = require('multer'); // Para upload de imagens
 const db = require('../db/db');
 const fs = require('fs');
+const cors = require("cors");
+
+
 
 // Configuração do multer para uploads de imagem
 
@@ -108,6 +111,47 @@ router.delete('/delete/:id', authenticateToken, (req, res) => {
   db.query(sql, [id, userId], (err, result) => {
     if (err) return res.status(500).json({ error: err });
     res.status(200).json({ message: 'Livro excluído com sucesso!' });
+  });
+});
+
+//catalogo mostrar livros
+// Rota para pegar os livros com status 'getRideOf'
+router.get('/catalog', async (req, res) => {
+  try {
+    const query = `
+      SELECT tblvro.*, tbuser.USER_NM, tbuser.USER_EMAIL, tbuser.USER_ID
+      FROM tblvro
+      JOIN tbuser ON tblvro.LVRO_DN = tbuser.USER_ID
+      WHERE tblvro.LVRO_STT_LT = 'getRideOf';
+    `;
+    const [rows] = await db.promise().query(query);
+    // Log para verificar o conteúdo de `rows` e `fields`
+    console.log('Resposta do banco de dados:', { rows });  // Log de depuração
+
+
+    // Verificando explicitamente se rows é um array
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'Nenhum livro encontrado no catálogo.' });
+    }
+
+    // Retorna os dados no formato correto
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Erro ao buscar os livros do catálogo:', error); // Log para depuração (REMOVER, DEBUG)
+    res.status(500).json({ message: 'Erro ao buscar os livros do catálogo', error });
+  }
+});
+
+//ROTA para buscar detalhes do livro por ID
+router.get('/books/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'SELECT * FROM tblvro WHERE LVRO_ID = ?';
+
+  db.query(query, [id], (err, result) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.send(result[0]); // Envia os dados do livro específico
   });
 });
 

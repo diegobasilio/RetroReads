@@ -1,6 +1,6 @@
 import Validation from '../Validations/bookRegisterValidation.js';
 import { useNavigate } from 'react-router-dom';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/Book Register/bookRegister.css';
 
@@ -21,7 +21,7 @@ export const genres = [ //Gênero dos livros
 ];
 
 function BookRegister() {
-  
+
 
   // Estado para armazenar os gêneros selecionados
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -52,7 +52,13 @@ function BookRegister() {
   }, [])
 
   const handleInput = (event) => {
-    setValues(prev => ({ ...prev, [event.target.name]: event.target.value }));
+    const { name, value } = event.target;
+    // Atualiza o valor do campo específico em 'values'
+    setValues(prev => ({ ...prev, [name]: value }));
+    // Validação apenas do campo atual
+    const fieldError = Validation({ ...values, [name]: value })[name];
+    // Atualiza o erro somente do campo em que o usuário está escrevendo
+    setErrors(prevErrors => ({ ...prevErrors, [name]: fieldError }));
   };
 
   // Função para atualizar os gêneros selecionados
@@ -68,12 +74,15 @@ function BookRegister() {
     setValues(prev => ({ ...prev, book_gender: selected.join(',') }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setErrors(Validation(values));
+
+    const validationErrors = Validation(values);
+    setErrors(validationErrors);
+
     console.log(values);  //retirar linha depois (RETIRAR)
 
-    if (Object.keys(errors).length === 0) {
+    if (Object.keys(validationErrors).length === 0) {
 
       const formData = new FormData();
       // Adiciona os campos do livro no FormData
@@ -93,23 +102,22 @@ function BookRegister() {
       if (values.book_img) {
         formData.append('image', values.book_img);
       }
-      //  
-      axios.post('http://localhost:8081/livros/add', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${localStorage.getItem("token")}`
-        }
-      })
-        .then(res => {
-          console.log('Livro adicionado com sucesso', res.data);
-          navigate('/my-shelf');
-        })
-        .catch(err => {
-          console.error("Erro ao adicionar livro:", err.response ? err.response.data : err.message);
-          alert("Erro ao adicionar livro. Verifique o console para mais detalhes.");
+
+      try {
+        const res = await axios.post('http://localhost:8081/livros/add', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${localStorage.getItem("token")}`
+          }
         });
+        console.log('Livro adicionado com sucesso', res.data);
+        navigate('/my-shelf');
+      } catch (err) {
+        console.error("Erro ao adicionar livro:", err.response ? err.response.data : err.message);
+        alert("Erro ao adicionar livro. Verifique o console para mais detalhes.");
+      }
     }
-  }
+  };
 
   /* Função para as capas imagens*/
   // const fileInputRef = useRef(null); // useRef para o input de arquivo
@@ -197,6 +205,7 @@ function BookRegister() {
 
                 <label htmlFor="book_gender">Gênero:</label>
                 <select name="book_gender" id="book_gender" value={selectedGenres} onChange={handleGenreChange}>
+                  <option value="">Selecione</option>
                   {genres.map((genre, index) => (<option key={index} value={genre}>{genre}</option>))}
                 </select>
                 {errors.book_gender && <span className='text-danger'>{errors.book_gender}</span>}

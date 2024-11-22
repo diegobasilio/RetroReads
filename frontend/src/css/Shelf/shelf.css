@@ -100,6 +100,14 @@
     width: 15rem;
 }
 
+.book-card-shelf:hover{
+    -webkit-box-shadow: 1px 6px 18px -2px rgba(0,0,0,0.46);
+    -moz-box-shadow: 1px 6px 18px -2px rgba(0,0,0,0.46);
+    box-shadow: 1px 6px 18px -2px rgba(0,0,0,0.46);
+    transition: 0.2s ease-in;
+    cursor: pointer;
+}
+
 /* Imagem do livro */
 .book_img{
     width: 100%;
@@ -213,6 +221,59 @@
 }
 
 .book-edit-btn:hover{
-    color: #6e6e6e;
+    color: #464646;
     transition: 0.3s;
+}
+
+/* ------------------------------------------- */
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+}
+  
+.pagination-btn {
+    padding: 0.5rem 0.685rem;
+    border: 1px solid #00000033;
+    border-radius: 1rem;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.pagination-btn:hover{
+    background-color: #91918E;
+    transition: 0.3s;
+}
+
+.page{
+    display: flex;
+    font-family: var(--font-inter);
+    padding: 0.4rem;
+}
+
+.totalPages{
+    margin-left: 0.3rem;
+    font-weight: bold;
+}
+
+.arrowIconLeft{
+    display: flex;
+    width: 28px; 
+    height: 28px; 
+}
+
+.arrowIconRight{
+    display: flex;
+    width: 28px; 
+    height: 28px; 
+}
+
+.pagination-btn:hover .arrowIconLeft {
+    content: url('/public/assets/icons/arrow-left-icon-white.svg');
+}
+
+.pagination-btn:hover .arrowIconRight {
+    content: url('/public/assets/icons/arrow-right-icon-white.svg');
 }

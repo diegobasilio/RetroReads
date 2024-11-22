@@ -28,9 +28,13 @@
 }
 
 /* Título */
-.h1-Title-bookEdit {
+.h1-viewTitle {
     font-size: 2rem;
     color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    margin-bottom: 1.5rem;
 }
 
 /* Divs para Foto do Livro, Dados do Livro e Status de Leitura */
@@ -168,6 +172,11 @@ label {
 }
 
 /* BOTÃO DELETAR */
+.modal-btn-deleteAndTitle{
+    display: flex;
+    align-items: center; /* Alinhamento vertical */
+}
+
 .trash-icon{
     width: 20px;
     height: 20px;

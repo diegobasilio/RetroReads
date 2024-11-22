@@ -7,9 +7,14 @@ import axios from 'axios';
 
 function MyShelf() {
   const [books, setBooks] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedBook, setSelectedBook] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1); // Página atual
+  const booksPerPage = 12; // Quantidade de livros por página
+  const totalPages = Math.ceil(books.length / booksPerPage); // Total de páginas
 
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [viewOnly, setViewOnly] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [setFilters] = useState({});
 
@@ -25,7 +30,7 @@ function MyShelf() {
     }));
   };
 
-  useEffect(() => {
+  useEffect(() => { //VERIFICA SE O USER TEM O TOKEN
     if (!localStorage.getItem("token")) {
       window.location.href = "http://localhost:3000/Login";
     }
@@ -51,9 +56,6 @@ function MyShelf() {
       .catch(err => console.log(err));
   }, []);
 
-
-
-
   //TRADUÇÕES DOS STATUS
   const statusTranslations = {
     wantToRead: "Quero ler",
@@ -61,9 +63,36 @@ function MyShelf() {
     read: "Lido",
     getRideOf: "Quero me livrar",
   };
-  //
-  const handleEditClick = (book) => {
-    setSelectedBook(book);
+  
+  // Calcular o índice dos livros na página atual
+  const startIndex = (currentPage - 1) * booksPerPage;
+  const endIndex = startIndex + booksPerPage;
+  const currentBooks = books.slice(startIndex, endIndex); // Livros da página atual
+
+  // Função para mudar de página
+  const handlePageChange = (direction) => {
+    setCurrentPage((prevPage) => {
+      if (direction === "next" && endIndex < books.length) {
+        return prevPage + 1;
+      } else if (direction === "prev" && startIndex > 0) {
+        return prevPage - 1;
+      }
+      return prevPage;
+    });
+  };
+
+  // Funções para abrir o modal em modo de edição
+  const handleEditClick = (event, book) => {
+    event.stopPropagation();
+    setSelectedBook(book); // Define o livro selecionado
+    setViewOnly(false); // Muda para modo de edição
+    setIsModalOpen(true);
+  };
+
+  // Função para abrir o modal em modo visualização
+  const handleViewClick = (book) => {
+    setSelectedBook(book); // Define o livro selecionado
+    setViewOnly(true); // Muda para modo de visualização
     setIsModalOpen(true);
   };
 
@@ -85,7 +114,6 @@ function MyShelf() {
     useEffect(() => {
     console.log("Estado de livros atualizado:", books);
   }, [books]);
-
 
   const handleDeleteBook = (bookId) => {
     axios.delete(`http://localhost:8081/livros/delete/${bookId}`, {
@@ -143,8 +171,8 @@ function MyShelf() {
       {/* Array de livros de cada USER */}
       <div className="background-container-shelf">
         <div className="container-bookcard">
-          {books.map((book, index) => (
-            <div className="book-card-shelf" key={index}>
+          {currentBooks.map((book, index) => (
+            <div className="book-card-shelf" key={index} onClick={() => handleViewClick(book)}>
               <img
                 src={`http://localhost:8081${book.LVRO_IMG}`}
                 alt="userBookImage"
@@ -162,16 +190,41 @@ function MyShelf() {
                   {statusTranslations[book.LVRO_STT_LT] || book.LVRO_STT_LT}
                 </div>
 
-                <button className="book-edit-btn" onClick={() => handleEditClick(book)}>Editar Livro</button>
+                <button className="book-edit-btn" onClick={(e) => handleEditClick(e, book)}>Editar Livro</button>
               </div>
             </div>
           ))}
         </div>
       </div>
 
+      {/* Esconde a paginação quando o user só tem uma páginação */}
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button
+            className="pagination-btn"
+            onClick={() => handlePageChange("prev")}
+            disabled={currentPage === 1}
+          >
+            <img src="./assets/icons/arrow-left-icon.svg" alt="Anterior" className="arrowIconLeft" />
+          </button>
+
+          {/* Exibir página atual e total de páginas */}
+          <span className="page">Pág. {currentPage} de <span className="totalPages">{totalPages}</span></span>
+
+          <button
+            className="pagination-btn"
+            onClick={() => handlePageChange("next")}
+            disabled={currentPage === totalPages}
+          >
+            <img src="./assets/icons/arrow-right-icon.svg" alt="Próxima" className="arrowIconRight" />
+          </button>
+        </div>
+      )}
+
       <EditBook
         book={selectedBook}
         isOpen={isModalOpen}
+        viewOnly={viewOnly}
         onClose={handleCloseModal}
         onSave={handleSaveBook}
         onDelete={handleDeleteBook}

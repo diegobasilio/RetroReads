@@ -4,7 +4,7 @@ import { genres } from '../pages/BookRegister';
 import '../css/BookEdit/bookEdit.css'
 
 
-const EditBook = ({ book, isOpen, onClose, onSave, onDelete }) => {
+const EditBook = ({ book, isOpen, onClose, onSave, onDelete, viewOnly }) => {
   const [bookDetails, setBookDetails] = useState({
     titulo: "",
     autor: "",
@@ -43,6 +43,7 @@ const EditBook = ({ book, isOpen, onClose, onSave, onDelete }) => {
   }, [book]);
 
   const handleGenreChange = (event) => {
+    if (viewOnly) return; // Não permite edição em modo viewOnly
     const { options } = event.target;
     const selected = [];
     for (let i = 0; i < options.length; i++) {
@@ -56,6 +57,7 @@ const EditBook = ({ book, isOpen, onClose, onSave, onDelete }) => {
 
 
   const handleChange = (e) => {
+    if (viewOnly) return; // Não permite edição em modo viewOnly
     const { name, value } = e.target;
     setBookDetails({
       ...bookDetails,
@@ -111,11 +113,18 @@ const EditBook = ({ book, isOpen, onClose, onSave, onDelete }) => {
       <div className="modal">
         <div className="modal-content">
 
-          <div className="modal-btn">
+        {viewOnly && (
+          <h1 className="h1-viewTitle">{bookDetails.titulo}</h1>  
+        )}
+
+        {!viewOnly && (
+          <div className="modal-btn-deleteAndTitle"> 
+            <h1 className="h1-viewTitle">{bookDetails.titulo}</h1>
             <button className="deleteBtn" onClick={handleDelete}>
               <img src="./assets/icons/trash-icon.svg" alt="deletar" className="trash-icon" />
             </button>
           </div>
+        )}
 
           <div className="container-div">
 
@@ -139,33 +148,33 @@ const EditBook = ({ book, isOpen, onClose, onSave, onDelete }) => {
               <div className="form-field">
                 {/* Campo TÍTULO ↓ */}
                 <label htmlFor="titulo">Título</label>
-                <input type="text" name="titulo" className="bookEdit_title" value={bookDetails.titulo} onChange={handleChange} />
+                <input type="text" name="titulo" className="bookEdit_title" value={bookDetails.titulo} onChange={handleChange} disabled={viewOnly} />
 
                 {/* Campo AUTOR ↓ */}
                 <label htmlFor="autor">Autor</label>
-                <input type="text" name="autor" className="bookEdit_author" value={bookDetails.autor} onChange={handleChange} />
+                <input type="text" name="autor" className="bookEdit_author" value={bookDetails.autor} onChange={handleChange}  disabled={viewOnly}/>
 
                 {/* Campo EDITORA ↓ */}
                 <label htmlFor="editora">Editora</label>
-                <input type="text" name="editora" className="bookEdit_publisher" value={bookDetails.editora} onChange={handleChange} />
+                <input type="text" name="editora" className="bookEdit_publisher" value={bookDetails.editora} onChange={handleChange} disabled={viewOnly}/>
 
                 {/* Campo DATA DE LANÇAMENTO ↓ */}
                 <label htmlFor="data_lancamento">Data de lançamento</label>
-                <input type="date" format="yyyy-MM-dd" name="data_lancamento" className="bookEdit_date" value={bookDetails.data_lancamento} onChange={handleChange} />
+                <input type="date" format="yyyy-MM-dd" name="data_lancamento" className="bookEdit_date" value={bookDetails.data_lancamento} onChange={handleChange} disabled={viewOnly}/>
 
                 {/* Campo GÊNERO ↓ */}
                 <label htmlFor="genero">Gênero</label>
-                <select name="genero" id="genero" className="bookEdit_genre" value={selectedGenres} onChange={handleGenreChange}  >
+                <select name="genero" id="genero" className="bookEdit_genre" value={selectedGenres} onChange={handleGenreChange} disabled={viewOnly} >
                   {genres.map((genre, index) => (<option key={index} value={genre}>{genre}</option>))}
                 </select>
 
                 {/* Campo QNT DE PÁGINAS ↓ */}
                 <label htmlFor="quantidade_paginas">Quantidade de páginas</label>
-                <input type="text" name="quantidade_paginas" className="bookEdit_pages" value={bookDetails.quantidade_paginas} onChange={handleChange} />
+                <input type="text" name="quantidade_paginas" className="bookEdit_pages" value={bookDetails.quantidade_paginas} onChange={handleChange} disabled={viewOnly}/>
 
                 {/* Campo ISBN ↓ */}
                 <label htmlFor="isbn">ISBN</label>
-                <input type="text" name="isbn" className="bookEdit_ISBN" value={bookDetails.isbn} onChange={handleChange} />
+                <input type="text" name="isbn" className="bookEdit_ISBN" value={bookDetails.isbn} onChange={handleChange} disabled={viewOnly}/>
               </div>
             </div>
 
@@ -176,25 +185,25 @@ const EditBook = ({ book, isOpen, onClose, onSave, onDelete }) => {
               {/* Campo DESCRIÇÃO ↓ */}
               <div className="form-field">
                 <label htmlFor="descricao">Descrição</label>
-                <textarea name="descricao" className="bookEdit_description" value={bookDetails.descricao} onChange={handleChange} />
+                <textarea name="descricao" className="bookEdit_description" value={bookDetails.descricao} onChange={handleChange} disabled={viewOnly}/>
 
                 <div className="small-fields">
                   {/* Campo NOTA ↓ */}
                   <div className="form-field">
                     <label htmlFor="nota">Nota</label>
-                    <input type="number" name="nota" className="bookEdit_score" min={1} max={5} value={bookDetails.nota} onChange={handleChange} />
+                    <input type="number" name="nota" className="bookEdit_score" min={1} max={5} value={bookDetails.nota} onChange={handleChange} disabled={viewOnly}/>
                   </div>
 
                   {/* Campo PREÇO ↓ */}
                   <div className="form-field">
                     <label htmlFor="preco">Preço</label>
-                    <input type="text" name="preco" className="bookEdit_price" value={bookDetails.preco} onChange={handleChange} />
+                    <input type="text" name="preco" className="bookEdit_price" value={bookDetails.preco} onChange={handleChange} disabled={viewOnly}/>
                   </div>
 
                   {/* Campo QUANTIDADE ↓ */}
                   <div className="form-field">
                     <label htmlFor="quantidade">Quantidade</label>
-                    <input type="text" name="quantidadeT" className="bookEdit_amount" value={bookDetails.quantidade} onChange={handleChange} />
+                    <input type="text" name="quantidadeT" className="bookEdit_amount" value={bookDetails.quantidade} onChange={handleChange} disabled={viewOnly}/>
                   </div>
 
                   {/* Campo STATUS DA LEITURA ↓ */}
@@ -203,25 +212,25 @@ const EditBook = ({ book, isOpen, onClose, onSave, onDelete }) => {
 
                     <div className="reading-status">
                       <label className="custom-radio left">
-                        <input type="radio" name="status_leitura" value="wantToRead" checked={bookDetails.status_leitura === "wantToRead"} onChange={handleChange} />
+                        <input type="radio" name="status_leitura" value="wantToRead" checked={bookDetails.status_leitura === "wantToRead"} onChange={handleChange} disabled={viewOnly}/>
                         <span className="radiomark"></span>
                         Quero ler
                       </label>
 
                       <label className="custom-radio right">
-                        <input type="radio" name="status_leitura" value="reading" checked={bookDetails.status_leitura === "reading"} onChange={handleChange} />
+                        <input type="radio" name="status_leitura" value="reading" checked={bookDetails.status_leitura === "reading"} onChange={handleChange} disabled={viewOnly}/>
                         <span className="radiomark"></span>
                         Estou lendo
                       </label>
 
                       <label className="custom-radio left">
-                        <input type="radio" name="status_leitura" value="read" checked={bookDetails.status_leitura === "read"} onChange={handleChange} />
+                        <input type="radio" name="status_leitura" value="read" checked={bookDetails.status_leitura === "read"} onChange={handleChange} disabled={viewOnly}/>
                         <span className="radiomark"></span>
                         Já li
                       </label>
 
                       <label className="custom-radio right">
-                        <input type="radio" name="status_leitura" value="getRideOf" checked={bookDetails.status_leitura === "getRideOf"} onChange={handleChange} />
+                        <input type="radio" name="status_leitura" value="getRideOf" checked={bookDetails.status_leitura === "getRideOf"} onChange={handleChange} disabled={viewOnly}/>
                         <span className="radiomark"></span>
                         Quero me livrar
                       </label>
@@ -233,10 +242,11 @@ const EditBook = ({ book, isOpen, onClose, onSave, onDelete }) => {
           </div>
 
           <div className="modal-btn">
-            <button onClick={onClose} className="closeBtn"> Fechar </button>
+            <button onClick={onClose} className="closeBtn" > Fechar </button>
+          {!viewOnly && (
             <button onClick={handleSave} className="saveBtn"> Salvar alterações </button>
+          )}
           </div>
-
         </div>
       </div>
     )

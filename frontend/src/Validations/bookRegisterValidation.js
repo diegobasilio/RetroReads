@@ -2,7 +2,7 @@ function Validation(values) {
      let error = {}
    
      // Padrões para validação
-     const isbn_pattern = /^(97(8|9))?\d{9}(\d|X)$/; // Padrão para ISBN-10 ou ISBN-13
+     const isbn_pattern = /^(?=(?:[^0-9]*[0-9]){10}(?:(?:[^0-9]*[0-9]){3})?$)[\d-]+$/;// Padrão para ISBN-10 ou ISBN-13
      const score_pattern = /^[0-5]$/; // Padrão para nota de 0 a 5
      const price_pattern = /^\d+(\.\d{1,2})?$/; // Padrão para preço (com ou sem casas decimais)
      const pages_pattern = /^\d+$/; // Padrão para número de páginas (somente dígitos)
@@ -33,9 +33,9 @@ function Validation(values) {
      }
    
      // Validação do gênero
-     if (values.book_gender === "") {
-       error.book_gender = "O gênero do livro é obrigatório";
-     }
+     if (!values.book_gender || values.book_gender === "") {
+      error.book_gender = "Selecione um gênero";
+    }
    
      // Validação do número de páginas
      if (values.book_numberPages === "") {
@@ -46,10 +46,10 @@ function Validation(values) {
    
      // Validação do ISBN
      if (values.book_isbn === "") {
-       error.book_isbn = "O ISBN é obrigatório";
-     } else if (!isbn_pattern.test(values.book_isbn)) {
-       error.book_isbn = "Digite um ISBN válido";
-     }
+      error.book_isbn = "O ISBN é obrigatório";
+    } else if (!isbn_pattern.test(values.book_isbn)) {
+      error.book_isbn = "Digite um ISBN válido";
+    }
    
      // Validação da descrição
      if (values.book_description === "") {
