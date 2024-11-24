@@ -8,6 +8,7 @@ import MyInterests from '../pages/MyInterests'
 import MyShelf from '../pages/MyShelf'
 import BookRegister from '../pages/BookRegister'
 import MySales from '../pages/MySales'
+import Cash from '../pages/Cash'
 import PrivateRoute from './PrivateRoute';
 
 const AppRoutes = () => {
@@ -21,6 +22,7 @@ const AppRoutes = () => {
         <Route path="/my-shelf" element={<PrivateRoute> <MyShelf /> </PrivateRoute>} /> 
         <Route path="/book-register" element={<PrivateRoute> <BookRegister /> </PrivateRoute>} /> 
         <Route path="/my-sales" element={<PrivateRoute> <MySales /> </PrivateRoute>} /> 
+        <Route path="/cash" element={<PrivateRoute> <Cash /> </PrivateRoute>} /> 
       </Routes>
     );
   };

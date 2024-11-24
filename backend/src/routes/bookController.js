@@ -7,8 +7,6 @@ const db = require('../db/db');
 const fs = require('fs');
 const cors = require("cors");
 
-
-
 // Configuração do multer para uploads de imagem
 
 // Configura o caminho relativo para o diretório 'uploads' (considerando a raiz do projeto)
