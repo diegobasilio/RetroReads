@@ -48,6 +48,19 @@
 
 ###
 
-<p align="left">Lucas Quinália<br>Yuri Viana<br>Stephanni Cavalcante<br>Matheus Souto<br>Diego Basilio<br>Mauricio Stavarengo<br>Davi Silva</p>
+<p align="left">
+  Lucas Quinália - Leader
+  <br>
+  Yuri Viana - DevOps, SM, BackEnd Developer
+  <br>
+  Stephanni Cavalcante - Frontend Developer
+  <br>
+  Matheus Souto - DBA
+  <br>
+  Diego Basilio - Backend Developer
+  <br>
+  Mauricio Stavarengo - Backlog
+  <br>
+  Davi Silva</p>
 
 ###
